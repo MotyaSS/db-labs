@@ -8,7 +8,8 @@ SELECT client_id
 FROM rent
 WHERE
     (start_date >= '2023-01-22 00:00:00' AND end_date <= '2023-01-30 23:59:59')
-GROUP BY client_id ORDER BY client_id;
+GROUP BY client_id
+ORDER BY client_id;
 -- 4 alt
 SELECT *
 FROM client
@@ -25,8 +26,7 @@ WHERE
 
 -- 6
 SELECT client_id, SUM(total_cost) AS total_rent_cost
-FROM rent
-client_id
+FROM rent client_id
 GROUP BY client_id
 ORDER BY client_id;
 
@@ -35,6 +35,10 @@ FROM client;
 
 -- 7
 -- Никак без JOIN
+SELECT v.type, COUNT(r.id) AS rented_count
+FROM vehicle v
+         JOIN rent r ON v.id = r.vehicle_id
+GROUP BY v.type;
 
 -- 8
 SELECT client_id, SUM(total_cost) AS total_rent_cost
@@ -91,19 +95,14 @@ ORDER BY affirmation_date;
 -- 15
 SELECT *
 FROM client
-WHERE id IN (
-    SELECT client_id
-    FROM rent
-    GROUP BY client_id
-    ORDER BY COUNT(id) DESC
-);
+WHERE
+    id IN (SELECT client_id
+           FROM rent
+           GROUP BY client_id
+           ORDER BY COUNT(id) DESC);
 -- to check 15
-SELECT
-    r.client_id,
-    COUNT(r.id) AS rental_count
-FROM
-    rent r
-GROUP BY
-    r.client_id
-ORDER BY
-    rental_count DESC;
+SELECT r.client_id,
+       COUNT(r.id) AS rental_count
+FROM rent r
+GROUP BY r.client_id
+ORDER BY rental_count DESC;

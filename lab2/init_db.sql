@@ -52,3 +52,4 @@ VALUES ('John', 'Doe', 'john.doe@example.com', '12345678901'),
        ('Alice', 'Johnson', 'alice.johnson@example.com', '11223344556'),
        ('Bob', 'Brown', 'bob.brown@example.com', '66554433221'),
        ('Kirill', 'Vasilev', 'kir_vas@example.com', '22010029318');
+
