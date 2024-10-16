@@ -34,11 +34,23 @@ SELECT *
 FROM client;
 
 -- 7
--- Никак без JOIN
 SELECT v.type, COUNT(r.id) AS rented_count
 FROM vehicle v
          JOIN rent r ON v.id = r.vehicle_id
 GROUP BY v.type;
+
+-- GPT без JOIN
+SELECT type,
+       (SELECT COUNT(*)
+        FROM rent
+        WHERE
+            vehicle_id IN
+            (SELECT v1.id
+             FROM vehicle v1
+             WHERE
+                 v1.type = v.type)) AS count
+FROM vehicle v
+GROUP BY type;
 
 -- 8
 SELECT client_id, SUM(total_cost) AS total_rent_cost
